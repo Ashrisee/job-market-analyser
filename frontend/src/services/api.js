@@ -1,4 +1,6 @@
-const API_BASE = '/api';
+// In production (Vercel), use the full Render backend URL
+// In development, use /api which Vite proxies to localhost:5001
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export const API = {
   async fetchJobs(keyword, location = 'India', limit = 30) {

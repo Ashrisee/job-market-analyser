@@ -41,7 +41,6 @@ export default function Hero() {
       {/* Gradient Blobs */}
       <div className="blob blob-blue w-[600px] h-[600px] -top-40 -left-40 animate-float" />
       <div className="blob blob-purple w-[500px] h-[500px] top-1/3 -right-32 animate-float" style={{ animationDelay: '2s' }} />
-      <div className="blob blob-pink w-[400px] h-[400px] bottom-0 left-1/3 animate-float" style={{ animationDelay: '4s' }} />
 
       {/* Radial gradient overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#03010a_70%)]" />
@@ -52,14 +51,13 @@ export default function Hero() {
         backgroundSize: '60px 60px',
       }} />
 
-      <div className="relative z-10 container-lg text-center" style={{ paddingTop: '6rem', paddingBottom: '6rem' }}>
+      <div className="relative z-10 container-lg text-center py-24">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass text-sm text-white/70"
-          style={{ marginBottom: '2.5rem' }}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass text-sm text-white/70 mb-10"
         >
           <Sparkles size={14} className="text-[#00d4ff]" />
           <span>AI-Powered Job Intelligence Platform</span>
@@ -71,10 +69,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, marginBottom: '1.5rem', fontWeight: 900, letterSpacing: '-0.02em' }}
+          className="text-[clamp(2.5rem,6vw,5rem)] leading-[1.05] mb-6 font-black tracking-tight"
         >
           <span className="text-gradient">{TYPED_STRINGS[textIndex].substring(0, charIndex)}</span>
-          <span className="inline-block w-[3px] h-[0.8em] bg-[#00d4ff] ml-1 align-middle" style={{ animation: 'typewriter-cursor 1s step-end infinite' }} />
+          <span className="inline-block w-[3px] h-[0.8em] bg-[#00d4ff] ml-1 align-middle animate-pulse" />
         </motion.h1>
 
         {/* Subtitle */}
@@ -82,7 +80,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.4)', maxWidth: '600px', margin: '0 auto 3rem', lineHeight: 1.7 }}
+          className="text-lg text-white/40 max-w-[600px] mx-auto mb-12 leading-relaxed"
         >
           Real-time job scraping, AI-powered skill matching, salary analytics, and career insights — all in one premium dashboard.
         </motion.p>
@@ -92,7 +90,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}
+          className="flex flex-wrap items-center justify-center gap-4"
         >
           <GlowButton size="lg" onClick={scrollToForm}>
             <Sparkles size={18} />
@@ -108,12 +106,12 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          style={{ position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)' }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            style={{ color: 'rgba(255,255,255,0.2)' }}
+            className="text-white/20"
           >
             <ArrowDown size={20} />
           </motion.div>

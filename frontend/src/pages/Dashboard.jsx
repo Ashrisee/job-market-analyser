@@ -77,64 +77,66 @@ export default function Dashboard() {
 
   if (!profile) return null;
 
-  const grid4 = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' };
-  const grid2 = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem' };
-  const grid3 = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' };
-  const stack = { display: 'flex', flexDirection: 'column', gap: '1.5rem' };
-
   return (
     <>
       <DashboardLayout profile={profile}>
         {/* Top bar */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <button onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer' }}>
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-sm text-white/40 bg-transparent border-0 cursor-pointer hover:text-white transition-colors"
+          >
             <ArrowLeft size={16} /> Back
           </button>
-          <div style={{ flex: 1 }} />
+          <div className="flex-1" />
           <GlowButton variant="secondary" size="sm" onClick={exportReport}>
             <Download size={14} /> Export Report
           </GlowButton>
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem', marginBottom: '2rem' }}>
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.6rem 1rem', borderRadius: '0.75rem',
-                fontSize: '0.8rem', fontWeight: 500, whiteSpace: 'nowrap',
-                cursor: 'pointer', transition: 'all 0.3s',
-                border: activeTab === tab.id ? '1px solid rgba(0,212,255,0.2)' : '1px solid transparent',
-                background: activeTab === tab.id ? 'linear-gradient(135deg, rgba(0,212,255,0.12), rgba(168,85,247,0.12))' : 'transparent',
-                color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.4)',
-              }}
-            >
-              <tab.icon size={14} />
-              {tab.label}
-            </button>
-          ))}
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-8 scrollbar-thin">
+          {tabs.map(tab => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap cursor-pointer transition-all duration-300 border ${
+                  isActive
+                    ? 'border-[#00d4ff]/20 bg-gradient-to-r from-[#00d4ff]/12 to-[#a855f7]/12 text-white shadow-[0_0_15px_rgba(0,212,255,0.05)]'
+                    : 'border-transparent bg-transparent text-white/40 hover:text-white/70 hover:bg-white/[0.02]'
+                }`}
+              >
+                <tab.icon size={14} />
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {loading ? (
-          <div style={stack}>
-            <div style={grid4}>{[1,2,3,4].map(i => <CardShimmer key={i} />)}</div>
-            <div style={grid2}><CardShimmer /><CardShimmer /></div>
+          <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map(i => <CardShimmer key={i} />)}
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <CardShimmer />
+              <CardShimmer />
+            </div>
           </div>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
             {/* OVERVIEW */}
             {activeTab === 'overview' && (
-              <div style={stack}>
-                <div style={grid4}>
+              <div className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   <StatCard label="Total Matches" value={summary.total || 0} icon={Briefcase} color="#00d4ff" />
                   <StatCard label="Avg Match Score" value={summary.avg_score || 0} suffix="%" icon={Target} color="#a855f7" />
                   <StatCard label="High Matches (75%+)" value={summary.high_matches || 0} icon={TrendingUp} color="#10b981" />
                   <StatCard label="Top Score" value={summary.top_score || 0} suffix="%" icon={Brain} color="#f59e0b" />
                 </div>
-                <div style={grid2}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <TrendChart data={trends?.trending_skills || []} title="Top In-Demand Skills" />
                   <AIInsights insights={insights} />
                 </div>
@@ -145,9 +147,9 @@ export default function Dashboard() {
             {activeTab === 'jobs' && <JobListings jobs={matchData?.matched_jobs || []} />}
 
             {activeTab === 'trends' && (
-              <div style={stack}>
+              <div className="flex flex-col gap-6">
                 <TrendChart data={trends?.trending_skills || []} title="Trending Skills in Market" />
-                <div style={grid3}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <StatCard label="Remote Jobs" value={trends?.remote_vs_onsite?.remote_percentage || 0} suffix="%" icon={Target} color="#10b981" />
                   <StatCard label="Total Companies" value={trends?.top_companies?.length || 0} icon={Briefcase} color="#a855f7" />
                   <StatCard label="Job Sources" value={trends?.hiring_by_source?.length || 0} icon={TrendingUp} color="#00d4ff" />
@@ -156,9 +158,9 @@ export default function Dashboard() {
             )}
 
             {activeTab === 'salary' && (
-              <div style={stack}>
+              <div className="flex flex-col gap-6">
                 {salary?.overview && (
-                  <div style={grid4}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <StatCard label="Average Salary" value={`₹${(salary.overview.avg || 0).toLocaleString()}`} icon={DollarSign} color="#10b981" />
                     <StatCard label="Median Salary" value={`₹${(salary.overview.median || 0).toLocaleString()}`} icon={DollarSign} color="#a855f7" />
                     <StatCard label="Min Salary" value={`₹${(salary.overview.min || 0).toLocaleString()}`} icon={DollarSign} color="#f59e0b" />

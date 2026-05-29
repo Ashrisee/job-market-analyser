@@ -12,8 +12,8 @@ class JobAnalyzer:
 
     SKILL_CATEGORIES = {
         'programming_languages': [
-            'python', 'java', 'javascript', 'typescript', 'c++', 'c#', 'golang', 'go',
-            'rust', 'php', 'ruby', 'swift', 'kotlin', 'scala', 'r', 'dart', 'lua'
+            'python', 'java', 'javascript', 'typescript', 'c++', 'c#', 'golang',
+            'rust', 'php', 'ruby', 'swift', 'kotlin', 'scala', 'dart', 'lua'
         ],
         'frontend': [
             'react', 'angular', 'vue', 'svelte', 'next.js', 'nuxt', 'html', 'css',
@@ -21,7 +21,7 @@ class JobAnalyzer:
         ],
         'backend': [
             'django', 'flask', 'fastapi', 'spring', 'express', 'rails', 'laravel',
-            'asp.net', 'node.js', 'nest.js', 'gin', 'fiber', 'graphql', 'rest'
+            'asp.net', 'node.js', 'nest.js', 'graphql', 'rest'
         ],
         'databases': [
             'sql', 'postgresql', 'mysql', 'mongodb', 'redis', 'elasticsearch',
@@ -40,7 +40,7 @@ class JobAnalyzer:
             'react native', 'flutter', 'ios', 'android', 'swiftui', 'jetpack compose'
         ],
         'tools': [
-            'git', 'jira', 'figma', 'postman', 'vs code', 'intellij', 'vim'
+            'git', 'jira', 'figma', 'postman'
         ],
     }
 
@@ -49,12 +49,26 @@ class JobAnalyzer:
     for cat_skills in SKILL_CATEGORIES.values():
         ALL_SKILLS.extend(cat_skills)
 
+    def _skill_in_text(self, skill: str, text: str) -> bool:
+        """Check if a skill is present in the text, using word boundaries for short skills."""
+        if len(skill) <= 3:
+            pattern = ""
+            if re.match(r'^\w', skill):
+                pattern += r'\b'
+            pattern += re.escape(skill)
+            if re.search(r'\w$', skill):
+                pattern += r'\b'
+            else:
+                pattern += r'(?!\w)'
+            return bool(re.search(pattern, text))
+        return skill in text
+
     def extract_skills(self, text: str) -> Dict[str, List[str]]:
         """Extract categorized skills from job description text."""
         text_lower = text.lower()
         found = {}
         for category, skills in self.SKILL_CATEGORIES.items():
-            matched = [s for s in skills if s in text_lower]
+            matched = [s for s in skills if self._skill_in_text(s, text_lower)]
             if matched:
                 found[category] = matched
         return found
@@ -62,7 +76,7 @@ class JobAnalyzer:
     def extract_flat_skills(self, text: str) -> List[str]:
         """Extract flat list of skills from text."""
         text_lower = text.lower()
-        return [s for s in self.ALL_SKILLS if s in text_lower]
+        return [s for s in self.ALL_SKILLS if self._skill_in_text(s, text_lower)]
 
     @staticmethod
     def extract_salary_range(salary_str: str) -> Tuple[float, float]:

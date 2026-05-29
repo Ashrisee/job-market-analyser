@@ -2,30 +2,26 @@ import { Sparkles, Globe, MessageCircle, Users } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '6rem' }}>
-      <div className="container-xl" style={{ padding: '4rem 1.5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '3rem' }}>
+    <footer className="border-t border-white/5 mt-24">
+      <div className="container-xl py-16 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
-          <div style={{ gridColumn: 'span 2' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <div style={{
-                width: '2rem', height: '2rem', borderRadius: '0.5rem',
-                background: 'linear-gradient(135deg, #00d4ff, #a855f7)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <Sparkles size={16} style={{ color: 'white' }} />
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00d4ff] to-[#a855f7] flex items-center justify-center">
+                <Sparkles size={16} className="text-white" />
               </div>
-              <span style={{ fontSize: '1.1rem', fontWeight: 700 }}>CareerScope <span style={{ color: '#00d4ff' }}>AI</span></span>
+              <span className="text-[1.1rem] font-bold text-white">CareerScope <span className="text-[#00d4ff]">AI</span></span>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', maxWidth: '400px', lineHeight: 1.6 }}>
+            <p className="text-white/40 text-sm max-w-[400px] leading-relaxed">
               Decode the job market with AI-powered intelligence. Find where your skills actually matter. Built with real-time data scraping, analytics, and intelligent matching.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Platform</h4>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>
+            <h4 className="text-[0.75rem] font-semibold text-white/80 mb-4 uppercase tracking-[0.1em]">Platform</h4>
+            <ul className="list-none p-0 flex flex-col gap-2 text-sm text-white/40">
               <li>Job Match Engine</li>
               <li>Salary Analytics</li>
               <li>Skill Gap Analysis</li>
@@ -33,9 +29,10 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Tech Stack */}
           <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tech Stack</h4>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>
+            <h4 className="text-[0.75rem] font-semibold text-white/80 mb-4 uppercase tracking-[0.1em]">Tech Stack</h4>
+            <ul className="list-none p-0 flex flex-col gap-2 text-sm text-white/40">
               <li>React + Vite</li>
               <li>Python Flask</li>
               <li>JSearch & Adzuna APIs</li>
@@ -45,19 +42,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-          <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)' }}>
+        <div className="mt-12 pt-8 border-t border-white/5 flex flex-wrap justify-between items-center gap-4">
+          <p className="text-xs text-white/30">
             © 2026 CareerScope AI. Built as a portfolio project.
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className="flex items-center gap-3">
             {[Globe, MessageCircle, Users].map((Icon, i) => (
-              <button key={i} style={{
-                width: '2rem', height: '2rem', borderRadius: '0.5rem',
-                background: 'rgba(255,255,255,0.05)', border: 'none',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', transition: 'background 0.3s',
-              }}>
-                <Icon size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
+              <button key={i} className="w-8 h-8 rounded-lg bg-white/5 border-0 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
+                <Icon size={14} className="text-white/50" />
               </button>
             ))}
           </div>

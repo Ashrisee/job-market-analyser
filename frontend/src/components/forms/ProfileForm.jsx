@@ -37,11 +37,8 @@ export default function ProfileForm() {
     }
   };
 
-  const labelStyle = { display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)', marginBottom: '0.75rem' };
-  const inputStyle = { width: '100%', borderRadius: '0.75rem', padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', fontSize: '0.875rem', outline: 'none' };
-
   return (
-    <section id="profile-form" style={{ padding: '6rem 0' }}>
+    <section id="profile-form" className="py-24">
       <div className="container-md">
         {/* Header */}
         <motion.div
@@ -49,13 +46,13 @@ export default function ProfileForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '3rem' }}
+          className="text-center mb-12"
         >
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.15em' }}>Get Started</span>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 900, marginTop: '0.75rem', letterSpacing: '-0.02em' }}>
+          <span className="text-[0.8rem] font-semibold text-[#00d4ff] uppercase tracking-[0.15em]">Get Started</span>
+          <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-black mt-3 tracking-tight">
             Tell Us About <span className="text-gradient">You</span>
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', marginTop: '0.75rem', fontSize: '0.95rem' }}>No sign-up needed. Enter your details and get instant insights.</p>
+          <p className="text-white/40 mt-3 text-[0.95rem]">No sign-up needed. Enter your details and get instant insights.</p>
         </motion.div>
 
         {/* Form Card */}
@@ -64,16 +61,15 @@ export default function ProfileForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="glass-strong glow-blue"
-          style={{ borderRadius: '1.5rem', padding: '2.5rem' }}
+          className="glass-strong glow-blue rounded-3xl p-10"
         >
           {/* Form Fields */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+          <div className="flex flex-col gap-7">
 
             {/* Skills */}
             <div>
-              <label style={labelStyle}>
-                <Code size={16} style={{ color: '#00d4ff' }} />
+              <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                <Code size={16} className="text-[#00d4ff]" />
                 Your Skills
               </label>
               <SkillInput selected={form.skills} onChange={v => update('skills', v)} />
@@ -81,40 +77,40 @@ export default function ProfileForm() {
 
             {/* Preferred Role */}
             <div>
-              <label style={labelStyle}>
-                <Search size={16} style={{ color: '#a855f7' }} />
+              <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                <Search size={16} className="text-[#a855f7]" />
                 Preferred Role
               </label>
               <input
                 value={form.preferred_role}
                 onChange={e => update('preferred_role', e.target.value)}
                 placeholder="e.g., Full Stack Developer, Data Scientist, ML Engineer"
-                style={inputStyle}
+                className="w-full rounded-xl px-4 py-3 bg-white/[0.04] border border-white/10 text-white/80 text-sm outline-none focus:border-[#00d4ff]/30 focus:bg-white/[0.06] transition-all"
               />
             </div>
 
             {/* Location + Salary row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label style={labelStyle}>
-                  <MapPin size={16} style={{ color: '#10b981' }} />
+                <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                  <MapPin size={16} className="text-[#10b981]" />
                   Preferred Location
                 </label>
                 <select
                   value={form.location}
                   onChange={e => update('location', e.target.value)}
-                  style={{ ...inputStyle, cursor: 'pointer', appearance: 'none' }}
+                  className="w-full rounded-xl px-4 py-3 bg-white/[0.04] border border-white/10 text-white/80 text-sm outline-none focus:border-[#00d4ff]/30 focus:bg-white/[0.06] transition-all cursor-pointer appearance-none"
                 >
-                  <option value="" style={{ background: '#0c0a24' }}>Any Location</option>
+                  <option value="" className="bg-[#0c0a24]">Any Location</option>
                   {POPULAR_LOCATIONS.map(loc => (
-                    <option key={loc} value={loc} style={{ background: '#0c0a24' }}>{loc}</option>
+                    <option key={loc} value={loc} className="bg-[#0c0a24]">{loc}</option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label style={labelStyle}>
-                  <DollarSign size={16} style={{ color: '#f59e0b' }} />
+                <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                  <DollarSign size={16} className="text-[#f59e0b]" />
                   Expected Salary (Annual)
                 </label>
                 <input
@@ -122,77 +118,67 @@ export default function ProfileForm() {
                   value={form.expected_salary}
                   onChange={e => update('expected_salary', parseInt(e.target.value) || '')}
                   placeholder="e.g., 800000"
-                  style={inputStyle}
+                  className="w-full rounded-xl px-4 py-3 bg-white/[0.04] border border-white/10 text-white/80 text-sm outline-none focus:border-[#00d4ff]/30 focus:bg-white/[0.06] transition-all"
                 />
               </div>
             </div>
 
             {/* Experience Level */}
             <div>
-              <label style={labelStyle}>
-                <Briefcase size={16} style={{ color: '#ec4899' }} />
+              <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                <Briefcase size={16} className="text-[#ec4899]" />
                 Experience Level
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.75rem' }}>
-                {EXPERIENCE_LEVELS.map(level => (
-                  <button
-                    key={level.value}
-                    onClick={() => update('experience_level', level.value)}
-                    className={form.experience_level === level.value ? '' : 'glass'}
-                    style={{
-                      padding: '0.875rem 0.5rem',
-                      borderRadius: '0.75rem',
-                      textAlign: 'center',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      border: form.experience_level === level.value ? '1px solid rgba(0,212,255,0.3)' : '1px solid transparent',
-                      background: form.experience_level === level.value ? 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15))' : undefined,
-                      color: form.experience_level === level.value ? 'white' : 'rgba(255,255,255,0.5)',
-                      transition: 'all 0.3s',
-                    }}
-                  >
-                    <span style={{ fontSize: '1.1rem', display: 'block', marginBottom: '0.25rem' }}>{level.icon}</span>
-                    {level.label}
-                  </button>
-                ))}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {EXPERIENCE_LEVELS.map(level => {
+                  const isSelected = form.experience_level === level.value;
+                  return (
+                    <button
+                      key={level.value}
+                      onClick={() => update('experience_level', level.value)}
+                      className={`px-4 py-3.5 rounded-xl text-center text-xs font-medium cursor-pointer transition-all duration-300 border ${
+                        isSelected
+                          ? 'border-[#00d4ff]/30 bg-gradient-to-r from-[#00d4ff]/15 to-[#a855f7]/15 text-white'
+                          : 'border-transparent glass text-white/50 hover:text-white/75 hover:bg-white/[0.06]'
+                      }`}
+                    >
+                      <span className="text-[1.1rem] block mb-1">{level.icon}</span>
+                      {level.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Work Mode */}
             <div>
-              <label style={labelStyle}>
-                <Wifi size={16} style={{ color: '#00d4ff' }} />
+              <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
+                <Wifi size={16} className="text-[#00d4ff]" />
                 Work Mode
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
-                {WORK_MODES.map(mode => (
-                  <button
-                    key={mode.value}
-                    onClick={() => update('work_mode', mode.value)}
-                    className={form.work_mode === mode.value ? '' : 'glass'}
-                    style={{
-                      padding: '0.875rem 0.5rem',
-                      borderRadius: '0.75rem',
-                      textAlign: 'center',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      border: form.work_mode === mode.value ? '1px solid rgba(0,212,255,0.3)' : '1px solid transparent',
-                      background: form.work_mode === mode.value ? 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15))' : undefined,
-                      color: form.work_mode === mode.value ? 'white' : 'rgba(255,255,255,0.5)',
-                      transition: 'all 0.3s',
-                    }}
-                  >
-                    <span style={{ fontSize: '1.1rem', display: 'block', marginBottom: '0.25rem' }}>{mode.icon}</span>
-                    {mode.label}
-                  </button>
-                ))}
+              <div className="grid grid-cols-3 gap-3">
+                {WORK_MODES.map(mode => {
+                  const isSelected = form.work_mode === mode.value;
+                  return (
+                    <button
+                      key={mode.value}
+                      onClick={() => update('work_mode', mode.value)}
+                      className={`px-4 py-3.5 rounded-xl text-center text-xs font-medium cursor-pointer transition-all duration-300 border ${
+                        isSelected
+                          ? 'border-[#00d4ff]/30 bg-gradient-to-r from-[#00d4ff]/15 to-[#a855f7]/15 text-white'
+                          : 'border-transparent glass text-white/50 hover:text-white/75 hover:bg-white/[0.06]'
+                      }`}
+                    >
+                      <span className="text-[1.1rem] block mb-1">{mode.icon}</span>
+                      {mode.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Submit */}
-            <div style={{ paddingTop: '0.75rem' }}>
+            <div className="pt-3">
               <GlowButton
                 size="lg"
                 className="w-full"
@@ -201,7 +187,7 @@ export default function ProfileForm() {
               >
                 {loading ? (
                   <>
-                    <span style={{ width: '1.25rem', height: '1.25rem', border: '2px solid rgba(255,255,255,0.3)', borderTop: '2px solid white', borderRadius: '50%', animation: 'spin-slow 1s linear infinite' }} />
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     Analyzing Market...
                   </>
                 ) : (
@@ -212,7 +198,7 @@ export default function ProfileForm() {
                 )}
               </GlowButton>
               {!form.skills.length && !form.preferred_role && (
-                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '0.75rem' }}>Add at least one skill or preferred role to continue</p>
+                <p className="text-xs text-white/30 text-center mt-3">Add at least one skill or preferred role to continue</p>
               )}
             </div>
           </div>

@@ -1,4 +1,4 @@
-"""Trend analysis module — hiring demand, growing skills, role popularity."""
+# Trend analysis module — hiring demand, growing skills, role popularity.
 
 import logging
 from typing import List, Dict

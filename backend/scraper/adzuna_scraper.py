@@ -1,4 +1,4 @@
-"""Adzuna API scraper. Real job listings from Adzuna's job search engine."""
+# Adzuna API scraper. Real job listings from Adzuna's job search engine.
 
 import requests
 import logging

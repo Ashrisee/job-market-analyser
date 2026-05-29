@@ -1,4 +1,4 @@
-"""Job matching engine — scores jobs against user profile across multiple dimensions."""
+# Job matching engine — scores jobs against user profile across multiple dimensions.
 
 import logging
 from typing import Dict, List
@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class JobMatcher:
-    """Match jobs with user profiles using weighted multi-factor scoring."""
+    """Matches jobs with user profiles using weighted scoring."""
 
     WEIGHTS = {
         'skill': 0.40,

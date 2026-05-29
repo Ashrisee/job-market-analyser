@@ -14,7 +14,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🔍 **Real-Time Job Scraping** | Scrapes live jobs from JSearch & Adzuna APIs |
+| 🔍 **Real-Time Job Scraping** | Scrapes live jobs from JSearch, Adzuna, and Internshala |
 | 🎯 **Smart Job Matching** | Multi-dimensional scoring (skills, experience, location, salary) |
 | 📊 **Salary Analytics** | Breakdown by location, experience level, and percentiles |
 | 📈 **Market Trends** | Trending skills, remote vs onsite ratios, top companies |
@@ -35,8 +35,9 @@
 
 ### Backend
 - **Python Flask** — Lightweight REST API
-- **JSearch API** (RapidAPI) — Job listings from Google Jobs
+- **JSearch API** (RapidAPI) — Job listings from LinkedIn, Indeed, Glassdoor
 - **Adzuna API** — Job market data from 16+ countries
+- **Internshala Scraper** — Native web scraping for Indian internships and jobs
 - **Custom Analytics Engine** — Modular analysis pipeline
 
 ---
@@ -54,19 +55,19 @@ git clone https://github.com/YOUR_USERNAME/careerscope-ai.git
 cd careerscope-ai
 ```
 
-### 2. Set up the Backend
+### 2. Set up the Environment & Backend
 ```bash
-cd backend
-pip install -r requirements.txt
-
-# Create .env file
+# Create .env file in the project root
 cp .env.example .env
 # Edit .env with your API keys
+
+cd backend
+pip install -r requirements.txt
 ```
 
 ### 3. Set up the Frontend
 ```bash
-cd frontend
+cd ../frontend
 npm install
 ```
 
@@ -85,7 +86,7 @@ Open **http://localhost:5173** in your browser.
 
 ## 🔑 Environment Variables
 
-Create a `.env` file in the `backend/` directory:
+Create a `.env` file in the **project root** directory:
 
 ```env
 JSEARCH_API_KEY=your_jsearch_rapidapi_key
@@ -101,6 +102,7 @@ FLASK_PORT=5001
 
 ```
 careerscope-ai/
+├── .env.example                # Example environment variables (copy to .env)
 ├── backend/
 │   ├── app.py                  # Flask API server
 │   ├── config.py               # Environment configuration
@@ -108,7 +110,8 @@ careerscope-ai/
 │   ├── scraper/
 │   │   ├── base_scraper.py     # Abstract scraper class
 │   │   ├── jsearch_scraper.py  # JSearch API integration
-│   │   └── adzuna_scraper.py   # Adzuna API integration
+│   │   ├── adzuna_scraper.py   # Adzuna API integration
+│   │   └── internshala_scraper.py # Internshala web scraper
 │   └── analytics/
 │       ├── analyzer.py         # Core job analysis engine
 │       ├── matcher.py          # Multi-dimensional matching

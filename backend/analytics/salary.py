@@ -1,4 +1,4 @@
-"""Salary analytics module — breakdowns by location, experience, and role."""
+# Salary analytics module — breakdowns by location, experience, and role.
 
 import logging
 from typing import List, Dict

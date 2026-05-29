@@ -1,4 +1,4 @@
-"""JSearch API scraper (via RapidAPI). Aggregates jobs from LinkedIn, Indeed, Glassdoor, etc."""
+# JSearch API scraper (via RapidAPI). Aggregates jobs from LinkedIn, Indeed, Glassdoor, etc.
 
 import requests
 import logging

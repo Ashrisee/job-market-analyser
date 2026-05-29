@@ -52,6 +52,7 @@ export default function FilterPanel({ filters, onChange, isOpen, onToggle }) {
                   <option value="" className="bg-[#0c0a24]">All</option>
                   <option value="JSearch" className="bg-[#0c0a24]">JSearch</option>
                   <option value="Adzuna" className="bg-[#0c0a24]">Adzuna</option>
+                  <option value="Internshala" className="bg-[#0c0a24]">Internshala</option>
                 </select>
               </div>
               <div>

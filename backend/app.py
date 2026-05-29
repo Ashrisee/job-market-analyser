@@ -1,7 +1,5 @@
-"""
-CareerScope AI — Flask API Server
-All endpoints for job scraping, analysis, matching, salary, and trends.
-"""
+# CareerScope AI — Flask API Server
+# All endpoints for job scraping, analysis, matching, salary, and trends.
 
 import os
 import logging
@@ -9,7 +7,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from config import Config
-from scraper import JSearchScraper, AdzunaScraper
+from scraper import JSearchScraper, AdzunaScraper, InternshalaScaper
 from analytics import JobAnalyzer, JobMatcher, SalaryAnalytics, TrendAnalyzer
 
 # ── Setup ──────────────────────────────────────────────────────
@@ -23,14 +21,13 @@ CORS(app, origins=[
     'http://localhost:5173',
     'http://localhost:3000',
     os.environ.get('FRONTEND_URL', ''),
-    # Allow all Vercel preview deployments
-    'https://*.vercel.app',
 ], supports_credentials=True)
 
 
 # ── Singletons ─────────────────────────────────────────────────
 jsearch = JSearchScraper(Config.JSEARCH_API_KEY)
 adzuna = AdzunaScraper(Config.ADZUNA_APP_ID, Config.ADZUNA_APP_KEY)
+internshala = InternshalaScaper()
 analyzer = JobAnalyzer()
 matcher = JobMatcher()
 salary_analytics = SalaryAnalytics()
@@ -56,6 +53,13 @@ def _scrape_jobs(keyword: str, location: str, limit: int) -> list:
         all_jobs.extend(adzuna.scrape(keyword, location, remaining))
     except Exception as e:
         logger.error(f"Adzuna failed: {e}")
+
+    # Internshala
+    try:
+        remaining = max(limit - len(all_jobs), 5)
+        all_jobs.extend(internshala.scrape(keyword, location, remaining))
+    except Exception as e:
+        logger.error(f"Internshala failed: {e}")
 
     # Deduplicate
     seen = set()

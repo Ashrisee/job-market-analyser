@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 frontend/node_modules/
+venv/
+.venv/
 
 # Environment variables
 .env
@@ -8,43 +10,27 @@ frontend/node_modules/
 .env.production
 
 # Build output
+dist/
 frontend/dist/
+
+# Python caching
 __pycache__/
 *.pyc
 *.pyo
+*.log
 
-# IDE
+# IDE & OS
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Python
-*.egg-info/
-dist/
-build/
-venv/
-.venv/
-
-# Logs
-*.log
-npm-debug.log*
-
 # Backend data cache
 backend/data/
-data/
 
-# Gemini/AI tools
+# AI Tooling
 .gemini/
-
-# Leftover Vite template files
-frontend/src/counter.ts
-frontend/src/main.ts
-frontend/src/style.css
-frontend/tsconfig.json
 

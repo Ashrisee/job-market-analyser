@@ -1,6 +1,14 @@
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import GlassCard from '../ui/GlassCard';
-import { AlertTriangle, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
+
+const TOOLTIP_STYLE = {
+  background: 'rgba(15,12,41,0.95)',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: '12px',
+  fontSize: '12px',
+  color: '#e2e8f0'
+};
 
 export default function SkillGapRadar({ data = {} }) {
   const matched = data.matched_skills || {};
@@ -25,7 +33,7 @@ export default function SkillGapRadar({ data = {} }) {
             <RadarChart data={radarData}>
               <PolarGrid stroke="rgba(255,255,255,0.05)" />
               <PolarAngleAxis dataKey="skill" tick={{ fontSize: 10, fill: '#94a3b8' }} />
-              <Tooltip contentStyle={{ background: 'rgba(15,12,41,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '12px', color: '#e2e8f0' }} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} />
               <Radar name="Market Demand" dataKey="demand" stroke="#a855f7" fill="#a855f7" fillOpacity={0.15} strokeWidth={2} />
               <Radar name="Your Skills" dataKey="yours" stroke="#00d4ff" fill="#00d4ff" fillOpacity={0.2} strokeWidth={2} />
             </RadarChart>

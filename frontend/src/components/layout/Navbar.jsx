@@ -30,46 +30,39 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className={scrolled ? 'glass-strong' : ''}
-      style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        transition: 'all 0.5s',
-        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.3)' : 'none',
-      }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? 'glass-strong shadow-[0_4px_20px_rgba(0,0,0,0.3)]' : ''
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="container-xl" style={{ height: '4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="container-xl h-16 flex items-center justify-between">
         {/* Logo */}
         <motion.div
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
+          className="flex items-center gap-2 cursor-pointer"
           onClick={() => navigate('/')}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <div style={{
-            width: '2rem', height: '2rem', borderRadius: '0.5rem',
-            background: 'linear-gradient(135deg, #00d4ff, #a855f7)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <Sparkles size={16} style={{ color: 'white' }} />
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00d4ff] to-[#a855f7] flex items-center justify-center">
+            <Sparkles size={16} className="text-white" />
           </div>
-          <span style={{ fontSize: '1.1rem', fontWeight: 700, letterSpacing: '-0.01em' }}>
+          <span className="text-[1.1rem] font-bold tracking-tight">
             Career<span className="text-gradient">Scope</span>{' '}
-            <span style={{ fontSize: '0.7rem', fontWeight: 500, padding: '0.15rem 0.4rem', borderRadius: '0.3rem', background: 'rgba(255,255,255,0.1)', color: '#00d4ff' }}>AI</span>
+            <span className="text-[0.7rem] font-medium px-1.5 py-0.5 rounded bg-white/10 text-[#00d4ff] ml-1">
+              AI
+            </span>
           </span>
         </motion.div>
 
         {/* Desktop Links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="hidden md:flex">
+        <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <button
               key={link.id}
               onClick={() => scrollTo(link.id)}
-              style={{ fontSize: '0.875rem', fontWeight: 500, color: 'rgba(255,255,255,0.6)', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.3s' }}
-              onMouseEnter={e => e.target.style.color = 'white'}
-              onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.6)'}
+              className="text-sm font-medium text-white/60 bg-transparent border-0 cursor-pointer hover:text-white transition-colors duration-300"
             >
               {link.label}
             </button>
@@ -77,11 +70,7 @@ export default function Navbar() {
           {location.pathname !== '/dashboard' && (
             <motion.button
               onClick={() => scrollTo('profile-form')}
-              style={{
-                padding: '0.5rem 1rem', fontSize: '0.8rem', fontWeight: 600,
-                borderRadius: '0.5rem', background: 'linear-gradient(135deg, #00d4ff, #a855f7)',
-                color: 'white', border: 'none', cursor: 'pointer',
-              }}
+              className="px-4 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-[#00d4ff] to-[#a855f7] text-white border-0 cursor-pointer shadow-[0_0_20px_rgba(0,212,255,0.2)]"
               whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(0,212,255,0.4)' }}
               whileTap={{ scale: 0.95 }}
             >
@@ -91,7 +80,10 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <button style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', cursor: 'pointer' }} className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
+        <button
+          className="md:hidden bg-transparent border-0 text-white/80 cursor-pointer hover:text-white transition-colors"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -103,12 +95,15 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-strong"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+            className="md:hidden glass-strong border-t border-white/5"
           >
-            <div style={{ padding: '1rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div className="py-4 px-6 flex flex-col gap-3">
               {links.map((link) => (
-                <button key={link.id} onClick={() => scrollTo(link.id)} style={{ display: 'block', width: '100%', textAlign: 'left', color: 'rgba(255,255,255,0.7)', padding: '0.5rem 0', background: 'none', border: 'none', cursor: 'pointer' }}>
+                <button
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
+                  className="block w-full text-left text-white/70 py-2 bg-transparent border-0 cursor-pointer hover:text-white transition-colors"
+                >
                   {link.label}
                 </button>
               ))}

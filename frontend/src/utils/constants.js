@@ -1,5 +1,5 @@
 export const SKILLS_LIST = [
-  'Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'C#', 'Go', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin',
+  'Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'C#', 'Golang', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin',
   'React', 'Angular', 'Vue', 'Next.js', 'Svelte', 'HTML', 'CSS', 'Tailwind', 'Redux',
   'Node.js', 'Django', 'Flask', 'FastAPI', 'Spring', 'Express', 'Rails', 'Laravel', 'GraphQL',
   'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Firebase', 'Supabase', 'DynamoDB',

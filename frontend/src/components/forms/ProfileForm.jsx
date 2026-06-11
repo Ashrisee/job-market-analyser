@@ -5,7 +5,6 @@ import { Rocket, MapPin, Briefcase, DollarSign, Wifi, Code, Search } from 'lucid
 import SkillInput from './SkillInput';
 import GlowButton from '../ui/GlowButton';
 import { EXPERIENCE_LEVELS, WORK_MODES, POPULAR_LOCATIONS } from '../../utils/constants';
-import { API } from '../../services/api';
 
 export default function ProfileForm() {
   const navigate = useNavigate();
@@ -25,13 +24,11 @@ export default function ProfileForm() {
   const handleSubmit = async () => {
     if (!form.skills.length && !form.preferred_role) return;
     setLoading(true);
+    // Navigate directly — the dashboard will fetch data itself (with mock fallback)
     try {
-      const keyword = form.preferred_role || form.skills.slice(0, 3).join(' ');
-      await API.fetchJobs(keyword, form.location || 'India', 30);
       navigate('/dashboard', { state: { profile: form } });
     } catch (err) {
       console.error('Error:', err);
-      navigate('/dashboard', { state: { profile: form } });
     } finally {
       setLoading(false);
     }

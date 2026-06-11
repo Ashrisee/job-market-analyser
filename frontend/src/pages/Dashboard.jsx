@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Briefcase, TrendingUp, DollarSign, Target, Brain, ArrowLeft, Download } from 'lucide-react';
+import { Briefcase, TrendingUp, DollarSign, Target, Brain, ArrowLeft, Download, Zap } from 'lucide-react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import StatCard from '../components/dashboard/StatCard';
 import TrendChart from '../components/dashboard/TrendChart';
@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [skillGap, setSkillGap] = useState(null);
   const [insights, setInsights] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   useEffect(() => {
     if (!profile) { navigate('/'); return; }
@@ -35,15 +36,27 @@ export default function Dashboard() {
   const loadDashboard = async () => {
     setLoading(true);
     try {
-      const [matchRes, trendRes, salaryRes, gapRes, insightRes] = await Promise.allSettled([
-        API.matchJobs(profile),
+      // Step 1: Check if backend is available
+      const backendUp = await API.checkBackend();
+      setIsDemoMode(!backendUp);
+
+      // Step 2: Match jobs first (this populates the backend cache for trends/salary/skills-gap)
+      let matchResult = null;
+      try {
+        matchResult = await API.matchJobs(profile);
+        setMatchData(matchResult);
+      } catch (err) {
+        console.error('Match failed:', err);
+      }
+
+      // Step 3: Now fetch the rest in parallel (backend cache is populated)
+      const [trendRes, salaryRes, gapRes, insightRes] = await Promise.allSettled([
         API.getTrends(),
         API.getSalary(),
         API.getSkillsGap(profile.skills || []),
         API.getInsights(profile),
       ]);
 
-      if (matchRes.status === 'fulfilled') setMatchData(matchRes.value);
       if (trendRes.status === 'fulfilled') setTrends(trendRes.value);
       if (salaryRes.status === 'fulfilled') setSalary(salaryRes.value);
       if (gapRes.status === 'fulfilled') setSkillGap(gapRes.value);
@@ -93,6 +106,35 @@ export default function Dashboard() {
             <Download size={14} /> Export Report
           </GlowButton>
         </div>
+
+        {/* Demo mode banner */}
+        {!loading && isDemoMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 mb-6 px-4 py-3 rounded-xl border border-[#f59e0b]/20 bg-[#f59e0b]/5 text-sm text-[#f59e0b]"
+          >
+            <Zap size={16} className="flex-shrink-0" />
+            <span>
+              <strong>Demo Mode</strong> — Backend not detected. Showing curated sample data.
+              Start the Flask backend on port 5001 to load live job data.
+            </span>
+          </motion.div>
+        )}
+
+        {/* Live mode banner */}
+        {!loading && !isDemoMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 mb-6 px-4 py-3 rounded-xl border border-[#10b981]/20 bg-[#10b981]/5 text-sm text-[#10b981]"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse flex-shrink-0" />
+            <span>
+              <strong>Live Mode</strong> — Connected to backend. Showing real-time scraped job data.
+            </span>
+          </motion.div>
+        )}
 
         {/* Tabs */}
         <div className="flex gap-2 overflow-x-auto pb-2 mb-8 scrollbar-thin">

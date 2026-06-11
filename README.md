@@ -1,6 +1,6 @@
 ---
 title: CareerScope AI
-emoji: 🚀
+emoji: 💻
 colorFrom: blue
 colorTo: purple
 sdk: docker
@@ -8,15 +8,25 @@ pinned: false
 short_description: AI job matching and market intelligence
 ---
 
-# CareerScope AI 🚀
+# CareerScope AI
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Play_Now-00d4ff?style=for-the-badge&logo=rocket)](https://huggingface.co/spaces/Ashrisee/careerscope-ai)
+[![Live Application](https://img.shields.io/badge/Live_Application-View_Now-000000?style=for-the-badge)](https://huggingface.co/spaces/Ashrisee/careerscope-ai)
 
-AI-powered job intelligence platform. Enter your skills → get real-time job matches, salary analytics, skill gap analysis and AI career insights.
+A job market intelligence platform that provides real-time job matching, salary analytics, and skill gap analysis.
 
-**Built with**: React 19 · Flask · Adzuna API · Internshala · Recharts · Framer Motion
+## Overview
+CareerScope AI bridges the gap between your current skill set and market demand. By analyzing live data from multiple job boards, it provides actionable insights into career paths, remote work trends, and missing skills required for your preferred roles.
 
-## 🌐 Live Application
-You can access the fully functioning live version here:
-👉 **[https://huggingface.co/spaces/Ashrisee/careerscope-ai](https://huggingface.co/spaces/Ashrisee/careerscope-ai)**
+## Core Features
+- **Intelligent Matching**: Cross-references your technical stack against live job postings.
+- **Market Analytics**: Real-time salary distributions and remote work trends.
+- **Skill Gap Analysis**: Identifies missing qualifications for targeted roles.
+- **AI Insights**: Generates structured career advice based on current market data.
 
+## Technology Stack
+- **Frontend**: React 19, Framer Motion, Recharts
+- **Backend**: Python, Flask
+- **Data Sources**: Adzuna API, Internshala Scraper, JSearch
+
+## Live Demo
+Access the live application here: [huggingface.co/spaces/Ashrisee/careerscope-ai](https://huggingface.co/spaces/Ashrisee/careerscope-ai)

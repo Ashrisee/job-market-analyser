@@ -64,7 +64,7 @@ export default function ProfileForm() {
           <div className="flex flex-col gap-7">
 
             {/* Skills */}
-            <div className="relative z-50">
+            <div className="relative z-[9999]">
               <label className="flex items-center gap-2 text-sm font-semibold text-white/70 mb-3">
                 <Code size={16} className="text-[#00d4ff]" />
                 Your Skills

@@ -74,7 +74,7 @@ export default function SkillInput({ selected = [], onChange }) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 mt-2 bg-[#0c0a24]/95 border border-[#00d4ff]/20 backdrop-blur-xl rounded-xl overflow-hidden z-50 shadow-2xl"
+            className="absolute top-full left-0 right-0 mt-2 bg-black border-2 border-[#00d4ff] rounded-xl overflow-hidden z-[9999] shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
           >
             {filtered.map(skill => (
               <button

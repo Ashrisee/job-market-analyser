@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: purple
 sdk: docker
 pinned: false
-short_description: AI-powered job market intelligence — skill matching, salary analytics, trends
+short_description: AI job matching and market intelligence
 ---
 
 # CareerScope AI 🚀

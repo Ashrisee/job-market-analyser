@@ -1,9 +1,10 @@
 # CareerScope AI — Flask API Server
 # All endpoints for job scraping, analysis, matching, salary, and trends.
+# Also serves the built React frontend as static files for single-origin deployment.
 
 import os
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 from config import Config
@@ -16,12 +17,17 @@ logger = logging.getLogger('careerscope')
 
 Config.ensure_dirs()
 
-app = Flask(__name__)
-CORS(app, origins=[
-    'http://localhost:5173',
-    'http://localhost:3000',
-    os.environ.get('FRONTEND_URL', ''),
-], supports_credentials=True)
+# Resolve the built React frontend path (exists in Docker / HF Spaces)
+_STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static', 'ui')
+_SERVE_FRONTEND = os.path.isdir(_STATIC_DIR)
+
+app = Flask(
+    __name__,
+    static_folder=_STATIC_DIR if _SERVE_FRONTEND else None,
+    static_url_path='',
+)
+# Allow all origins — same-origin when served from HF Spaces; dev uses Vite proxy
+CORS(app, origins='*', supports_credentials=False)
 
 
 # ── Singletons ─────────────────────────────────────────────────
@@ -290,9 +296,24 @@ def get_insights():
     return jsonify({'insights': insights})
 
 
+# ── Serve React SPA (catch-all) ───────────────────────────────
+# Must be registered AFTER all /api/* routes
+if _SERVE_FRONTEND:
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve_react(path):
+        # Serve actual static file if it exists, else fall back to index.html
+        target = os.path.join(_STATIC_DIR, path)
+        if path and os.path.isfile(target):
+            return send_from_directory(_STATIC_DIR, path)
+        return send_from_directory(_STATIC_DIR, 'index.html')
+    logger.info(f"Serving React frontend from: {_STATIC_DIR}")
+
+
 # ── Main ───────────────────────────────────────────────────────
 if __name__ == '__main__':
-    logger.info(f"Starting CareerScope AI API on port {Config.FLASK_PORT}")
+    port = int(os.environ.get('PORT', Config.FLASK_PORT))
+    logger.info(f"Starting CareerScope AI API on port {port}")
     logger.info(f"JSearch API: {'✓ configured' if Config.JSEARCH_API_KEY else '✗ missing'}")
     logger.info(f"Adzuna API:  {'✓ configured' if Config.ADZUNA_APP_ID else '✗ missing'}")
-    app.run(host='0.0.0.0', port=Config.FLASK_PORT, debug=Config.FLASK_DEBUG)
+    app.run(host='0.0.0.0', port=port, debug=Config.FLASK_DEBUG)
